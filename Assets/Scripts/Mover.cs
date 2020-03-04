@@ -67,7 +67,7 @@ public class Mover : MonoBehaviour
         if (coolDownInterval <= 0 && (isAutomatic || Input.GetKey("space")))
         {
             coolDownInterval = coolDown;
-            GameObject bullet = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
+            GameObject bullet = Instantiate(projectile, transform.position + 0.1f * (Vector3) fireDirection, Quaternion.identity) as GameObject;
             bullet.GetComponent<Rigidbody2D>().AddForce(fireDirection * 1000);
         }
 
