@@ -93,12 +93,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7822615982651512207}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9fd78929b9749c499671dc3b01b28ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f85ee42100000000aa5ee4210000000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.5
   player: {fileID: 6376697725846107653, guid: 5ad330e134bcf448a8fe63ac50e6a43e, type: 3}
-  body: {fileID: 7822615982651512206}
 --- !u!50 &7822615982651512206
 Rigidbody2D:
   serializedVersion: 4
@@ -118,7 +117,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &7822615982651512194
 BoxCollider2D:
