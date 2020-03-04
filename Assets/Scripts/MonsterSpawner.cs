@@ -7,6 +7,7 @@ public class MonsterSpawner : MonoBehaviour
 
     public float spawnTime;
     public GameObject monsterPrefab;
+    private GameObject player;
 
 
     private float spawnTimeRemaining;
@@ -16,7 +17,9 @@ public class MonsterSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        spawnTimeRemaining = spawnTime;
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -26,6 +29,8 @@ public class MonsterSpawner : MonoBehaviour
         if (spawnTimeRemaining <= 0)
         {
             GameObject monster = Instantiate(monsterPrefab, transform.position, Quaternion.identity);
+            monster.GetComponent<MonsterBehavior>().player = player;
+            spawnTimeRemaining = spawnTime;
         }
     }
 }
