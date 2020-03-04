@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7822615982651512195}
   - component: {fileID: 7822615982651512192}
-  - component: {fileID: 7822615982651512193}
   - component: {fileID: 7822615982651512206}
   - component: {fileID: 7822615982651512194}
+  - component: {fileID: -4512262744531046091}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Monster
@@ -84,20 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7822615982651512193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7822615982651512207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0da1aff21000000008c1aff210000000, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.5
-  player: {fileID: 6376697725846107653, guid: 5ad330e134bcf448a8fe63ac50e6a43e, type: 3}
 --- !u!50 &7822615982651512206
 Rigidbody2D:
   serializedVersion: 4
@@ -145,3 +131,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.69, y: 2.99}
   m_EdgeRadius: 0
+--- !u!114 &-4512262744531046091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7822615982651512207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0da1aff21000000008c1aff210000000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.5
+  player: {fileID: 6376697725846107653, guid: 5ad330e134bcf448a8fe63ac50e6a43e, type: 3}
