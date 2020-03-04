@@ -31,8 +31,8 @@ public class MonsterBehavior : MonoBehaviour
     {
         if (col.gameObject.tag.Equals("Projectile"))
         {
-            col.gameObject.SetActive(false);
-            gameObject.SetActive(false);
+            Destroy(col.gameObject);
+            Destroy(gameObject);
         }
     }
 }

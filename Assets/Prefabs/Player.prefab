@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  revSpeed: 100
+  revSpeed: 200
   angularOffset: 90
   projectile: {fileID: 7094282056770361919, guid: fc3d7ea4aad514999baa65a4e0e47188,
     type: 3}
