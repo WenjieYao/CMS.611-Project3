@@ -31,7 +31,6 @@ public class MonsterBehavior : MonoBehaviour
     {
         if (col.gameObject.tag.Equals("Projectile"))
         {
-            Destroy(col.gameObject);
             Destroy(gameObject);
         }
     }

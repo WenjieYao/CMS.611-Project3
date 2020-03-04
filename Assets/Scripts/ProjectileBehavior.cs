@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallCollision : MonoBehaviour
+public class ProjectileBehavior : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -16,11 +16,9 @@ public class WallCollision : MonoBehaviour
         
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (col.gameObject.tag.Equals("Projectile"))
-        {
-            Destroy(col.gameObject);
-        }
+        if (!collision.gameObject.tag.Equals("Player"))
+            Destroy(gameObject);
     }
 }
