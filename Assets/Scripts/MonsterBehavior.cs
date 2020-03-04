@@ -10,12 +10,12 @@ public class MonsterBehavior : MonoBehaviour
 
     Vector2 movement;
 
-    public Rigidbody2D body;
+    Rigidbody2D rb2D;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        rb2D = GetComponent<Rigidbody2D>();
     }
 
     // FixedUpdate is called 50 times a second
@@ -23,7 +23,7 @@ public class MonsterBehavior : MonoBehaviour
     {
         Vector2 moveDirection = (Vector2)(player.transform.position - transform.position);
 
-        body.MovePosition(body.position + moveDirection * speed * Time.fixedDeltaTime);
+        rb2D.MovePosition(rb2D.position + moveDirection * speed * Time.fixedDeltaTime);
         
     }
 
