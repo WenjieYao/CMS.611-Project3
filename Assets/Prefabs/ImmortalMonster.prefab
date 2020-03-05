@@ -98,9 +98,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   attackPower: 1
-  attackRate: 2
+  attackRate: 1
   isImmortal: 1
-  speed: 0.7
+  speed: 1
   target: {fileID: 6376697725846107653, guid: 5ad330e134bcf448a8fe63ac50e6a43e, type: 3}
 --- !u!50 &3520160205603066590
 Rigidbody2D:

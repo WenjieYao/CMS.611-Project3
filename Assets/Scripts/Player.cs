@@ -12,8 +12,10 @@ public class Player : Singleton<Player>
     /****************************************************/
     /***************** Basic Properties *****************/
     /****************************************************/
-    // Player health
+    // Player maximum health
     [SerializeField]
+    private int maxHealth = 0;
+    // Player health
     private int health = 0;
     // Player attack power
     [SerializeField]
@@ -38,6 +40,10 @@ public class Player : Singleton<Player>
     [SerializeField]
     private bool isAutomatic = false;
 
+    // Health bar of the player
+    [SerializeField]
+    private HealthBar playerHealthBar = null;
+
     // Current rigidbody2d object
     private Rigidbody2D rb2d;
     // A temporary vector indicating the movement direction
@@ -53,6 +59,18 @@ public class Player : Singleton<Player>
     // Public properties that corresponds to the private
     // properties above
     /****************************************************/
+    public int MaxHealth
+    {
+        get
+        {
+            return maxHealth;
+        }
+        set
+        {
+            this.maxHealth = value;
+        }
+    }
+
     public int Health
     {
         get
@@ -148,6 +166,18 @@ public class Player : Singleton<Player>
             this.isAutomatic = value;
         }
     }
+
+    public HealthBar PlayerHealthBar
+    {
+        get
+        {
+            return playerHealthBar;
+        }
+        set
+        {
+            this.playerHealthBar = value;
+        }
+    }
     /****************************************************/
 
     /****************************************************/
@@ -156,6 +186,10 @@ public class Player : Singleton<Player>
     // Start is called before the first frame update
     void Start()
     {
+        // Initialze player with full health
+        health = maxHealth;
+        // Initialze health bar
+        playerHealthBar.SetMaxHealth(maxHealth);
         // Get current rigidbody2d object
         rb2d = GetComponent<Rigidbody2D>();
         // Player doesn't fire at the beginning
@@ -207,17 +241,10 @@ public class Player : Singleton<Player>
 
         moveVector.Normalize();
         Vector2 fireDirection = GetFireDirection(angularOffset,FDMouse);
-        bulletRotation.z = (float)Mathf.Atan2(fireDirection.y, fireDirection.x) * (float)(180 / Mathf.PI);
+        bulletRotation.z = -angularOffset+(float)Mathf.Atan2(fireDirection.y, fireDirection.x) * (float)(180 / Mathf.PI);
         // Implement movement and rotation using rigidbody2d
         rb2d.MovePosition(rb2d.position + speed * moveVector * Time.fixedDeltaTime);
-        if (FDMouse)
-        {
-            rb2d.MoveRotation(-angularOffset+(float)Mathf.Atan2(fireDirection.y, fireDirection.x) * (float)(180 / Mathf.PI));
-        }
-        else
-        {
-            rb2d.MoveRotation(rb2d.rotation + rotateDirection * revSpeed * Time.fixedDeltaTime);
-        }
+        transform.GetChild(0).rotation = Quaternion.Euler(bulletRotation);
 
         
 

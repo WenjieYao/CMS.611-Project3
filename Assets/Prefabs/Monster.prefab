@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8313921005760119103}
   - component: {fileID: 6409372880037982396}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Monster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   attackPower: 1
-  attackRate: 2
+  attackRate: 1
   isImmortal: 0
-  speed: 0.5
+  speed: 0.7
   target: {fileID: 6376697725846107653, guid: 5ad330e134bcf448a8fe63ac50e6a43e, type: 3}

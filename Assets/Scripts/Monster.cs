@@ -134,6 +134,19 @@ public class Monster: Singleton<Monster>
         if (col.gameObject.tag.Equals("Player") && attackCoolDown <=0)
         {
             Player.Instance.Health -= attackPower;
+            Player.Instance.PlayerHealthBar.SetHealth(Player.Instance.Health);
+            attackCoolDown = 1.0F/attackRate;
+        }
+    }
+
+    // Monster collides with another object and stays
+    void OnCollisionStay2D(Collision2D col)
+    {
+        // Attack the player
+        if (col.gameObject.tag.Equals("Player") && attackCoolDown <=0)
+        {
+            Player.Instance.Health -= attackPower;
+            Player.Instance.PlayerHealthBar.SetHealth(Player.Instance.Health);
             attackCoolDown = 1.0F/attackRate;
         }
     }
