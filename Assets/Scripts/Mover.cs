@@ -68,7 +68,7 @@ public class Mover : MonoBehaviour
         {
             coolDownInterval = coolDown;
             GameObject bullet = Instantiate(projectile, transform.position + 0.1f * (Vector3) fireDirection, Quaternion.identity) as GameObject;
-            bullet.GetComponent<Rigidbody2D>().AddForce(fireDirection * 1000);
+            bullet.GetComponent<Rigidbody2D>().AddForce(fireDirection * 500);
         }
 
 
