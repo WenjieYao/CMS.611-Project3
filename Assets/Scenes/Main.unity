@@ -6500,7 +6500,7 @@ PrefabInstance:
         type: 3}
       propertyPath: monsterPrefab
       value: 
-      objectReference: {fileID: 7619030762482769492, guid: 36621e7639a104a9fa1b50209969d8cb,
+      objectReference: {fileID: 8313921005760119102, guid: 9a081cfa770434a64976f1bca72687b4,
         type: 3}
     - target: {fileID: 2046936839158540310, guid: 334bc3f5022ee426f8f4d354cd501a61,
         type: 3}
@@ -7264,7 +7264,7 @@ PrefabInstance:
         type: 3}
       propertyPath: monsterPrefab
       value: 
-      objectReference: {fileID: 7619030762482769492, guid: 36621e7639a104a9fa1b50209969d8cb,
+      objectReference: {fileID: 8313921005760119102, guid: 9a081cfa770434a64976f1bca72687b4,
         type: 3}
     - target: {fileID: 2046936839158540310, guid: 334bc3f5022ee426f8f4d354cd501a61,
         type: 3}
@@ -13784,7 +13784,7 @@ PrefabInstance:
         type: 3}
       propertyPath: monsterPrefab
       value: 
-      objectReference: {fileID: 7619030762482769492, guid: 36621e7639a104a9fa1b50209969d8cb,
+      objectReference: {fileID: 8313921005760119102, guid: 9a081cfa770434a64976f1bca72687b4,
         type: 3}
     - target: {fileID: 2046936839158540310, guid: 334bc3f5022ee426f8f4d354cd501a61,
         type: 3}
@@ -14663,7 +14663,7 @@ PrefabInstance:
         type: 3}
       propertyPath: monsterPrefab
       value: 
-      objectReference: {fileID: 7619030762482769492, guid: 36621e7639a104a9fa1b50209969d8cb,
+      objectReference: {fileID: 8313921005760119102, guid: 9a081cfa770434a64976f1bca72687b4,
         type: 3}
     - target: {fileID: 2046936839158540310, guid: 334bc3f5022ee426f8f4d354cd501a61,
         type: 3}
