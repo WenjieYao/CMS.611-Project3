@@ -59,7 +59,7 @@ public class Spawner : Singleton<Spawner>
     // Start is called before the first frame update
     void Start()
     {
-        // Does not spawning at the start
+        // Does not spawning at the start 
         spawnTimeRemaining = 1.0F/spawnRate;
         // Set the player as the target
         if (target == null)
@@ -80,7 +80,15 @@ public class Spawner : Singleton<Spawner>
             // Set transform to a shared parent
             monster.transform.SetParent(GameManager.Instance.MonsterParent);
             // Restore cool down time
-            spawnTimeRemaining = 1.0F/spawnRate;
+            if (monster.GetComponent<Monster>().IsImmortal)
+            {
+                // Spawn only one immortal monster
+                spawnTimeRemaining = 1F/0F;
+            }
+            else
+            {
+                spawnTimeRemaining = 1.0F/spawnRate;
+            }
         }
     }
 }

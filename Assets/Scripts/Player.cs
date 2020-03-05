@@ -229,7 +229,7 @@ public class Player : Singleton<Player>
             // Restore the cool down time according to fire rate
             coolDownInterval = 1.0F/fireRate;
             // Fire a projectile
-            GameObject bullet = Instantiate(projectilePrefab, transform.position + 0.1f * (Vector3) fireDirection, Quaternion.Euler(bulletRotation)) as GameObject;
+            GameObject bullet = Instantiate(projectilePrefab, transform.position + 0.15f * (Vector3) fireDirection, Quaternion.Euler(bulletRotation)) as GameObject;
             // Apply force to get a initial velocity
             bullet.GetComponent<Rigidbody2D>().velocity = fireDirection * 8;
             // Set a shared parent
