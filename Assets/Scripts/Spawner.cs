@@ -76,7 +76,7 @@ public class Spawner : Singleton<Spawner>
             // Create a new monster object
             GameObject monster = Instantiate(monsterPrefab, transform.position, Quaternion.identity);
             // Set monster target
-            monster.GetComponent<Monster>().Target = target;
+            monster.GetComponent<Enemy>().Target = target;
             // Set transform to a shared parent
             monster.transform.SetParent(GameManager.Instance.MonsterParent);
             // Restore cool down time
