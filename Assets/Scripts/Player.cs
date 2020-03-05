@@ -44,6 +44,10 @@ public class Player : Singleton<Player>
     private Vector2 moveVector;
     // A temporary value to apply the fire rate
     private float coolDownInterval;
+    // Fire direction using arrow key or mouse
+    private bool FDMouse = true;
+    // Bullet shooting rotation
+    private Vector3 bulletRotation = new Vector3(0,0,0);
 
     /****************************************************/
     // Public properties that corresponds to the private
@@ -159,14 +163,24 @@ public class Player : Singleton<Player>
     }
 
     // Get the firing direction as a vector
-    private Vector2 GetFireDirection(int angularOffset)
+    private Vector2 GetFireDirection(int angularOffset, bool FDMouse)
 	{
-        float rotateAngle = angularOffset + rb2d.rotation;
-
-        float x = Mathf.Cos(rotateAngle * Mathf.Deg2Rad);
-        float y = Mathf.Sin(rotateAngle * Mathf.Deg2Rad);
-        Vector2 rotateVector = new Vector2(x, y);
-
+        Vector2 rotateVector = new Vector2(0, 0);
+        if (FDMouse)
+        {
+            // Fire at the mouse direction
+            Vector3 MouseDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition)-transform.position;
+            rotateVector.x = MouseDirection.x;
+            rotateVector.y = MouseDirection.y;
+        }
+        else
+        {
+            // Tune direction using arrow key
+            float rotateAngle = angularOffset + rb2d.rotation;
+            rotateVector.x = Mathf.Cos(rotateAngle * Mathf.Deg2Rad);
+            rotateVector.y = Mathf.Sin(rotateAngle * Mathf.Deg2Rad);
+        }
+        rotateVector.Normalize();
         return rotateVector;
     }
 
@@ -192,11 +206,20 @@ public class Player : Singleton<Player>
             rotateDirection += -1;
 
         moveVector.Normalize();
+        Vector2 fireDirection = GetFireDirection(angularOffset,FDMouse);
+        bulletRotation.z = (float)Mathf.Atan2(fireDirection.y, fireDirection.x) * (float)(180 / Mathf.PI);
         // Implement movement and rotation using rigidbody2d
         rb2d.MovePosition(rb2d.position + speed * moveVector * Time.fixedDeltaTime);
-        rb2d.MoveRotation(rb2d.rotation + rotateDirection * revSpeed * Time.fixedDeltaTime);
+        if (FDMouse)
+        {
+            rb2d.MoveRotation(-angularOffset+(float)Mathf.Atan2(fireDirection.y, fireDirection.x) * (float)(180 / Mathf.PI));
+        }
+        else
+        {
+            rb2d.MoveRotation(rb2d.rotation + rotateDirection * revSpeed * Time.fixedDeltaTime);
+        }
 
-        Vector2 fireDirection = GetFireDirection(angularOffset);
+        
 
         // The cool down time
         coolDownInterval -= Time.fixedDeltaTime;
@@ -206,9 +229,9 @@ public class Player : Singleton<Player>
             // Restore the cool down time according to fire rate
             coolDownInterval = 1.0F/fireRate;
             // Fire a projectile
-            GameObject bullet = Instantiate(projectilePrefab, transform.position + 0.1f * (Vector3) fireDirection, Quaternion.identity) as GameObject;
+            GameObject bullet = Instantiate(projectilePrefab, transform.position + 0.1f * (Vector3) fireDirection, Quaternion.Euler(bulletRotation)) as GameObject;
             // Apply force to get a initial velocity
-            bullet.GetComponent<Rigidbody2D>().AddForce(fireDirection * 500);
+            bullet.GetComponent<Rigidbody2D>().velocity = fireDirection * 8;
             // Set a shared parent
             bullet.transform.SetParent(GameManager.Instance.ProjectileParent);
         }

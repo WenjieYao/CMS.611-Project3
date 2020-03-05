@@ -14739,6 +14739,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6376697725846107654, guid: 5ad330e134bcf448a8fe63ac50e6a43e,
+        type: 3}
+      propertyPath: fireRate
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6376697725846107705, guid: 5ad330e134bcf448a8fe63ac50e6a43e,
         type: 3}
       propertyPath: m_Mass

@@ -7,7 +7,7 @@ using UnityEngine;
 // properties and monster behaviors
 /****************************************************/
 
-public class Monster : Singleton<Monster>
+public class Monster: Singleton<Monster>
 {
     /****************************************************/
     /***************** Basic Properties *****************/

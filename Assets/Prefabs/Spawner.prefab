@@ -95,5 +95,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRate: 1
-  monsterPrefab: {fileID: 7822615982651512207, guid: 36621e7639a104a9fa1b50209969d8cb,
+  monsterPrefab: {fileID: 8313921005760119102, guid: 9a081cfa770434a64976f1bca72687b4,
     type: 3}
