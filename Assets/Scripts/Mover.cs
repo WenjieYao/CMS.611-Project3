@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mover : MonoBehaviour
+public class Mover : Singleton<Mover>
 {
 
     private Rigidbody2D rb2d;
