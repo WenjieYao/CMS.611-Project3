@@ -143,8 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cf87632100000000509763210000000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 2
   attackPower: 1
-  attackRate: 1
+  attackRate: 2
+  isImmortal: 0
   speed: 0.5
   target: {fileID: 6376697725846107653, guid: 5ad330e134bcf448a8fe63ac50e6a43e, type: 3}

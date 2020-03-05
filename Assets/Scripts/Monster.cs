@@ -32,7 +32,8 @@ public class Monster : Singleton<Monster>
     private GameObject target = null;
     // Current rigidbody2d object
     private Rigidbody2D rb2D;
-
+    // Attack cool down time
+    private float attackCoolDown = 0;
     /****************************************************/
     // Public properties that corresponds to the private
     // properties above
@@ -113,7 +114,7 @@ public class Monster : Singleton<Monster>
         // The monster heads towards the target
         Vector2 moveDirection = (Vector2)(target.transform.position - transform.position);
         rb2D.MovePosition(rb2D.position + moveDirection * speed * Time.fixedDeltaTime);
-        
+        attackCoolDown -= Time.fixedDeltaTime;
     }
 
     // Monster collides with another object
@@ -122,7 +123,18 @@ public class Monster : Singleton<Monster>
         // Hit by the projectile
         if (col.gameObject.tag.Equals("Projectile"))
         {
-            Destroy(gameObject);
+            if (!IsImmortal)
+            {
+                health -= Player.Instance.AttackPower;
+                if (health<=0)
+                    Destroy(gameObject);
+            }
+        }
+        // Attack the player
+        if (col.gameObject.tag.Equals("Player") && attackCoolDown <=0)
+        {
+            Player.Instance.Health -= attackPower;
+            attackCoolDown = 1.0F/attackRate;
         }
     }
 }

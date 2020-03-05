@@ -20,6 +20,9 @@ public class GameManager : Singleton<GameManager>
     // Set the spawned monsters under a parent
     [SerializeField]
     private Transform monsterParent = null;
+    // Game over pop-up
+    [SerializeField]
+    private GameObject gameOver = null;
 
     /****************************************************/
     // Public properties that corresponds to the private
@@ -63,7 +66,8 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
-        
+        if (Player.Instance.Health <=0)
+            gameOver.SetActive(true);
     }
 
 

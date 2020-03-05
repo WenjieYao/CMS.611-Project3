@@ -216,10 +216,4 @@ public class Player : Singleton<Player>
 
     }
 
-    // Function when player hits a collider
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag.Equals("Monster"))
-            Destroy(gameObject);
-    }
 }
