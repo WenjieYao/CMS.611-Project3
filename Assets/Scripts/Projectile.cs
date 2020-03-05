@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileBehavior : MonoBehaviour
+/****************************************************/
+// The Projectile script is used for defining projectile
+// properties and projectile behaviors
+/****************************************************/
+
+public class Projectile : Singleton<Projectile>
 {
     // Start is called before the first frame update
     void Start()
@@ -16,6 +21,7 @@ public class ProjectileBehavior : MonoBehaviour
         
     }
 
+    // Destroy the projectile when it hits a target
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.tag.Equals("Player"))

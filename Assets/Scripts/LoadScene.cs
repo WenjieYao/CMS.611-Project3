@@ -4,8 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/****************************************************/
+// The Load Scence script is used for loading a new
+// scence or end a game
+/****************************************************/
 public class LoadScene : MonoBehaviour
 {
+    // Fading effect image and animator
     public Image black;
     public Animator anim;
     // Start is called before the first frame update
@@ -20,6 +25,7 @@ public class LoadScene : MonoBehaviour
         
     }
 
+    // Load a new scence
     public void ChangeScene()
     {
         // Fading effect
@@ -38,6 +44,7 @@ public class LoadScene : MonoBehaviour
     {
         anim.SetBool("Fade",true);
         yield return new WaitUntil(()=>black.color.a==1);
+        // Load the next scence in building order
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
