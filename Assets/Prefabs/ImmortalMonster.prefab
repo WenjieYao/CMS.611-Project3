@@ -100,7 +100,7 @@ MonoBehaviour:
   attackPower: 1
   attackRate: 1
   isImmortal: 1
-  speed: 1
+  speed: 0.7
   target: {fileID: 6376697725846107653, guid: 5ad330e134bcf448a8fe63ac50e6a43e, type: 3}
   collectiblePrefab: {fileID: 5680234834701450658, guid: 29a9bc2a219384c2e81f20ecacd17719,
     type: 3}
@@ -116,7 +116,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
