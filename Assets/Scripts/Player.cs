@@ -266,4 +266,17 @@ public class Player : Singleton<Player>
 
     }
 
+    // Collect free food to refill heath
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Equals("FreeFood"))
+        {
+            if (health<maxHealth)
+            {
+                health += 1;
+                playerHealthBar.SetHealth(health);
+            }
+            Destroy(collision.gameObject);
+        }
+    }
 }

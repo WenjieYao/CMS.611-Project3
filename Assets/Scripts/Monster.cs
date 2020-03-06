@@ -30,6 +30,9 @@ public class Monster: Singleton<Monster>
     // Monster's attacking target
     [SerializeField]
     private GameObject target = null;
+    // Prefab of monster drops collectables
+    [SerializeField]
+    private GameObject collectiblePrefab = null;
     // Current rigidbody2d object
     private Rigidbody2D rb2D;
     // Attack cool down time
@@ -96,6 +99,18 @@ public class Monster: Singleton<Monster>
             this.target = value;
         }
     }
+
+    public GameObject CollectiblePrefab
+    {
+        get
+        {
+            return collectiblePrefab;
+        }
+        set
+        {
+            this.collectiblePrefab = value;
+        }
+    }
     /****************************************************/
 
     /****************************************************/
@@ -126,8 +141,18 @@ public class Monster: Singleton<Monster>
             if (!IsImmortal)
             {
                 health -= Player.Instance.AttackPower;
+                // Enemy died when health reaches 0
                 if (health<=0)
+                {
+                    
+                    // Drop collectables at a chance of 5%
+                    if (Random.Range(0.0f, 1.0f)>0.95)
+                    {
+                        GameObject collectible = Instantiate(collectiblePrefab, transform.position, Quaternion.identity) as GameObject;
+                        collectible.transform.SetParent(GameManager.Instance.MonsterParent);
+                    }
                     Destroy(gameObject);
+                }
             }
         }
         // Attack the player

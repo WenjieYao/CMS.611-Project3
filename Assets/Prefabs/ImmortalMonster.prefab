@@ -102,6 +102,8 @@ MonoBehaviour:
   isImmortal: 1
   speed: 1
   target: {fileID: 6376697725846107653, guid: 5ad330e134bcf448a8fe63ac50e6a43e, type: 3}
+  collectiblePrefab: {fileID: 5680234834701450658, guid: 29a9bc2a219384c2e81f20ecacd17719,
+    type: 3}
 --- !u!50 &3520160205603066590
 Rigidbody2D:
   serializedVersion: 4

@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Monster
   - Shop
+  - FreeFood
   layers:
   - Default
   - TransparentFX
