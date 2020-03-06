@@ -126,6 +126,9 @@ public class Monster: Singleton<Monster>
     // FixedUpdate is called 50 times a second
     void FixedUpdate()
     {
+        // Monsters die when day comes
+        if (!GameManager.Instance.IsNight)
+            Destroy(gameObject);
         // The monster heads towards the target
         Vector2 moveDirection = (Vector2)(target.transform.position - transform.position);
         rb2D.MovePosition(rb2D.position + moveDirection * speed * Time.fixedDeltaTime);
@@ -144,7 +147,8 @@ public class Monster: Singleton<Monster>
                 // Enemy died when health reaches 0
                 if (health<=0)
                 {
-                    
+                    // Player gain tech cash
+                    GameManager.Instance.TechCash += 1;
                     // Drop collectables at a chance of 5%
                     if (Random.Range(0.0f, 1.0f)>0.95)
                     {

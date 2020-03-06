@@ -251,7 +251,7 @@ public class Player : Singleton<Player>
         // The cool down time
         coolDownInterval -= Time.fixedDeltaTime;
         // Fire a projectile when the cool down time is 0
-        if (coolDownInterval <= 0 && (isAutomatic || Input.GetKey("space")))
+        if (coolDownInterval <= 0 && GameManager.Instance.IsNight && (isAutomatic || Input.GetKey("space")))
         {
             // Restore the cool down time according to fire rate
             coolDownInterval = 1.0F/fireRate;

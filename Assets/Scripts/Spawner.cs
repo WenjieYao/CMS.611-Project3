@@ -71,7 +71,7 @@ public class Spawner : Singleton<Spawner>
     {
         spawnTimeRemaining -= Time.fixedDeltaTime;
         // Spawn a new monster when cool down time is 0
-        if (spawnTimeRemaining <= 0)
+        if (spawnTimeRemaining <= 0 && GameManager.Instance.IsNight)
         {
             // Create a new monster object
             GameObject monster = Instantiate(monsterPrefab, transform.position, Quaternion.identity);
@@ -82,13 +82,18 @@ public class Spawner : Singleton<Spawner>
             // Restore cool down time
             if (monster.GetComponent<Monster>().IsImmortal)
             {
-                // Spawn only one immortal monster
+                // Spawn only one immortal monster per night
                 spawnTimeRemaining = 1F/0F;
             }
             else
             {
                 spawnTimeRemaining = 1.0F/spawnRate;
             }
+        }
+        // Reset spawning time at day
+        if (!GameManager.Instance.IsNight)
+        {
+            spawnTimeRemaining = 1.0F/spawnRate;
         }
     }
 }
