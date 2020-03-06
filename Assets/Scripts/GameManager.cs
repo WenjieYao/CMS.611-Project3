@@ -13,6 +13,12 @@ using TMPro;
 public class GameManager : Singleton<GameManager>
 {
     /****************************************************/
+    /************* Game Control Parameters **************/
+    /****************************************************/
+    // Day/Night time
+    private float DayTime = 10;
+    private float NightTime = 30;
+    /****************************************************/
     /***************** Basic Properties *****************/
     /****************************************************/
     // Set the fired projectiles under a parent
@@ -30,9 +36,6 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private TMP_Text techCashTxt = null; 
 
-    // Day/Night time
-    private float DayTime = 10;
-    private float NightTime = 30;
     // Day/Night time left and display
     private float timeLeft = 0;
     [SerializeField]
@@ -146,6 +149,8 @@ public class GameManager : Singleton<GameManager>
             {
                 TimeLeft = DayTime;
                 nightFilter.SetActive(false);
+                Player.Instance.Health = Player.Instance.MaxHealth;
+                Player.Instance.PlayerHealthBar.SetMaxHealth(Player.Instance.MaxHealth);
             }
         }
         TimeLeft -= Time.fixedDeltaTime;
