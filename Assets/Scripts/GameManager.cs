@@ -17,9 +17,12 @@ public class GameManager : Singleton<GameManager>
     /****************************************************/
     // Day/Night time
     private float DayTime = 10;
-    private float NightTime = 10;
+    private float NightTime = 20;
     // Pause flag
     private bool pause = false;
+    // Day/Night cycle flag
+    private bool isNight = false;
+    
     /****************************************************/
     /***************** Basic Properties *****************/
     /****************************************************/
@@ -29,6 +32,9 @@ public class GameManager : Singleton<GameManager>
     // Set the spawned monsters under a parent
     [SerializeField]
     private Transform monsterParent = null;
+    // Game win pop-up
+    [SerializeField]
+    private GameObject gameWin = null;
     // Game over pop-up
     [SerializeField]
     private GameObject gameOver = null;
@@ -52,9 +58,6 @@ public class GameManager : Singleton<GameManager>
     private int playerMaxHealth = 0;
     [SerializeField]
     private TMP_Text playerMHTxt = null; 
-
-    // Day/Night cycle flag
-    private bool isNight = true;
     
     // Filter used for night effect
     [SerializeField]
@@ -86,6 +89,10 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private float priceIncRate = 1.5f;
 
+    // Current round (year) and display
+    private int round = 1;
+    [SerializeField]
+    private TMP_Text roundTxt = null; 
     /****************************************************/
     // Public properties that corresponds to the private
     // properties above
@@ -190,6 +197,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+
     public float UpFRCost
     {
         get
@@ -228,6 +236,19 @@ public class GameManager : Singleton<GameManager>
             this.AttackCostTxt.text = "$" + value.ToString();
         }
     }
+
+    public int Round
+    {
+        get
+        {
+            return round;
+        }
+        set
+        {
+            this.round = value;
+            this.roundTxt.text = "Year: " + value.ToString();
+        }
+    }
     /****************************************************/
 
     /****************************************************/
@@ -237,6 +258,8 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         // Initialze display
+        Round = 1;
+        TechCash = 100;
         if (isNight)
         {
             TimeLeft = NightTime;
@@ -283,6 +306,7 @@ public class GameManager : Singleton<GameManager>
             }
             else
             {
+                Round +=1;
                 TimeLeft = DayTime;
                 nightFilter.SetActive(false);
                 shop.SetActive(true);
@@ -291,9 +315,18 @@ public class GameManager : Singleton<GameManager>
             }
         }
         TimeLeft -= Time.fixedDeltaTime;
+        // Win (Graduate from MIT) if round>4
+        if (round > 4)
+        {
+            Time.timeScale = 0;
+            gameWin.SetActive(true);
+        }
         // Game over if player health goes to 0
         if (Player.Instance.Health <=0)
+        {
+            Time.timeScale = 0;
             gameOver.SetActive(true);
+        }
         // Clear collectibles at day
         if (!isNight)
         {
@@ -351,7 +384,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     // Function to end game
-    public void ChangeScene()
+    public void QuitGame()
     {
         Time.timeScale = 1;
         //Debug.Log("LoadScene");

@@ -69,6 +69,7 @@ public class Spawner : Singleton<Spawner>
     // Update is called once per frame
     void FixedUpdate()
     {
+        spawnRate = GameManager.Instance.Round/2F;
         spawnTimeRemaining -= Time.fixedDeltaTime;
         // Spawn a new monster when cool down time is 0
         if (spawnTimeRemaining <= 0 && GameManager.Instance.IsNight)
