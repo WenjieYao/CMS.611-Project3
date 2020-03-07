@@ -18,6 +18,8 @@ public class GameManager : Singleton<GameManager>
     // Day/Night time
     private float DayTime = 10;
     private float NightTime = 30;
+    // Pause flag
+    private bool pause = false;
     /****************************************************/
     /***************** Basic Properties *****************/
     /****************************************************/
@@ -40,6 +42,16 @@ public class GameManager : Singleton<GameManager>
     private float timeLeft = 0;
     [SerializeField]
     private TMP_Text timeLeftTxt = null; 
+
+    // Player fire rate and display
+    private float playerFireRate = 0;
+    [SerializeField]
+    private TMP_Text playerFRTxt = null; 
+
+    // Tech cash and the display
+    private int playerMaxHealth = 0;
+    [SerializeField]
+    private TMP_Text playerMHTxt = null; 
 
     // Day/Night cycle flag
     private bool isNight = true;
@@ -112,6 +124,32 @@ public class GameManager : Singleton<GameManager>
             this.isNight = value;
         }
     }
+
+    public float PlayerFireRate
+    {
+        get
+        {
+            return playerFireRate;
+        }
+        set
+        {
+            this.playerFireRate = value;
+            this.playerFRTxt.text = "Fire Rate: " + value.ToString();
+        }
+    }
+
+    public int PlayerMaxHealth
+    {
+        get
+        {
+            return playerMaxHealth;
+        }
+        set
+        {
+            this.playerMaxHealth = value;
+            this.playerMHTxt.text = "Max HP:    " + value.ToString();
+        }
+    }
     /****************************************************/
 
     /****************************************************/
@@ -120,6 +158,7 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
+        // Initialze display
         if (isNight)
         {
             TimeLeft = NightTime;
@@ -130,11 +169,23 @@ public class GameManager : Singleton<GameManager>
             TimeLeft = DayTime;
             nightFilter.SetActive(false);
         }
+        PlayerFireRate = Player.Instance.FireRate;
+        PlayerMaxHealth = Player.Instance.MaxHealth;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        // Check if pause
+         if (pause == false)
+         {
+             Time.timeScale = 1;
+         }
+         
+         else 
+         {
+             Time.timeScale = 0;
+         }
         // Change Day/Night when time runs out
         if (TimeLeft<=0)
         {
@@ -164,10 +215,22 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    // Pause function and unpause
+    public void PauseFun()
+    {
+        if(pause)
+        {
+            pause = false;
+            Time.timeScale = 1;
+        }
+        else
+            pause = true;
+    }
 
     // Function to end game
     public void ChangeScene()
     {
+        Time.timeScale = 1;
         //Debug.Log("LoadScene");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
 
@@ -176,6 +239,7 @@ public class GameManager : Singleton<GameManager>
     // Function to restart a new game
     public void RestartGame()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
