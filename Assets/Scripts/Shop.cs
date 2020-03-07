@@ -66,7 +66,9 @@ public class Shop : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        upMaxHPCost = 2;
+        upAttackCost = 3;
+        upMaxFRCost = 4;        
     }
 
     // Update is called once per frame
