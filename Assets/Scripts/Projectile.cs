@@ -18,7 +18,8 @@ public class Projectile : Singleton<Projectile>
     // Update is called once per frame
     void Update()
     {
-        
+        if (!GameManager.Instance.IsNight)
+            Destroy(gameObject);
     }
 
     // Destroy the projectile when it hits a target
