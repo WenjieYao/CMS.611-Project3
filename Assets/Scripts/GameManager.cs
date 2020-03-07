@@ -65,7 +65,27 @@ public class GameManager : Singleton<GameManager>
     private GameObject shop = null; 
     // Shop menu
     [SerializeField]
-    private GameObject shopMenu = null; 
+    private GameObject shopMenu = null;
+
+    // Fire rate upgrade cost and display
+    private float upFRCost;
+    [SerializeField]
+    private TMP_Text FRCostTxt = null;
+
+    // Max health upgrade cost and display
+    private float upHPCost;
+    [SerializeField]
+    private TMP_Text HPCostTxt = null;
+
+    // Attack power upgrade cost and display
+    private float upAttackCost;
+    [SerializeField]
+    private TMP_Text AttackCostTxt = null;
+
+    // Price increase rate
+    [SerializeField]
+    private float priceIncRate = 1.5f;
+
     /****************************************************/
     // Public properties that corresponds to the private
     // properties above
@@ -169,6 +189,45 @@ public class GameManager : Singleton<GameManager>
             this.shopMenu = value;
         }
     }
+
+    public float UpFRCost
+    {
+        get
+        {
+            return upFRCost;
+        }
+        set
+        {
+            this.upFRCost = value;
+            this.FRCostTxt.text = "$" + value.ToString();
+        }
+    }
+
+    public float UpHPCost
+    {
+        get
+        {
+            return upHPCost;
+        }
+        set
+        {
+            this.upHPCost = value;
+            this.HPCostTxt.text = "$" + value.ToString();
+        }
+    }
+
+    public float UpAttackCost
+    {
+        get
+        {
+            return upAttackCost;
+        }
+        set
+        {
+            this.upAttackCost = value;
+            this.AttackCostTxt.text = "$" + value.ToString();
+        }
+    }
     /****************************************************/
 
     /****************************************************/
@@ -192,6 +251,9 @@ public class GameManager : Singleton<GameManager>
         }
         PlayerFireRate = Player.Instance.FireRate;
         PlayerMaxHealth = Player.Instance.MaxHealth;
+        UpHPCost = shopMenu.GetComponent<Shop>().UpMaxHPCost;
+        UpFRCost = shopMenu.GetComponent<Shop>().UpMaxFRCost;
+        UpAttackCost = shopMenu.GetComponent<Shop>().UpAttackCost;
     }
 
     // Update is called once per frame
@@ -242,7 +304,8 @@ public class GameManager : Singleton<GameManager>
     // Upgrade player maximum health
     public void UpMaxHP()
     {
-        if (TechCash>=2)
+        int cost = shopMenu.GetComponent<Shop>().UpMaxHPCost;
+        if (TechCash >= cost)
         {
             Player.Instance.MaxHealth += 1;
             Player.Instance.Health = Player.Instance.MaxHealth;
@@ -251,20 +314,27 @@ public class GameManager : Singleton<GameManager>
             // Update max health display
             PlayerMaxHealth = Player.Instance.MaxHealth;
             // Update cash and display
-            TechCash -= 2;
+            TechCash -= cost;
+            // Increase the cost of the powerup and update display
+            shopMenu.GetComponent<Shop>().UpMaxHPCost = Mathf.RoundToInt((float)(cost * priceIncRate));
+            UpHPCost = shopMenu.GetComponent<Shop>().UpMaxHPCost;
         }
     }
 
     // Upgrade player fire rate
     public void UpMaxFR()
     {
-        if (TechCash>=4)
+        int cost = shopMenu.GetComponent<Shop>().UpMaxFRCost;
+        if (TechCash >= cost)
         {
             Player.Instance.FireRate += 1;
             // Update fire rate display
             PlayerFireRate = Player.Instance.FireRate;
             // Update cash and display
-            TechCash -= 4;
+            TechCash -= cost;
+            // Increase the cost of the powerup and update display
+            shopMenu.GetComponent<Shop>().UpMaxFRCost = Mathf.RoundToInt((float)(cost * priceIncRate));
+            UpFRCost = shopMenu.GetComponent<Shop>().UpMaxFRCost;
         }
     }
 
