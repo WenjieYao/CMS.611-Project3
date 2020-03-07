@@ -17,7 +17,7 @@ public class GameManager : Singleton<GameManager>
     /****************************************************/
     // Day/Night time
     private float DayTime = 10;
-    private float NightTime = 30;
+    private float NightTime = 10;
     // Pause flag
     private bool pause = false;
     /****************************************************/
@@ -59,6 +59,13 @@ public class GameManager : Singleton<GameManager>
     // Filter used for night effect
     [SerializeField]
     private GameObject nightFilter = null; 
+
+    // Shop object
+    [SerializeField]
+    private GameObject shop = null; 
+    // Shop menu
+    [SerializeField]
+    private GameObject shopMenu = null; 
     /****************************************************/
     // Public properties that corresponds to the private
     // properties above
@@ -150,6 +157,18 @@ public class GameManager : Singleton<GameManager>
             this.playerMHTxt.text = "Max HP:    " + value.ToString();
         }
     }
+
+    public GameObject ShopMenu
+    {
+        get
+        {
+            return shopMenu;
+        }
+        set
+        {
+            this.shopMenu = value;
+        }
+    }
     /****************************************************/
 
     /****************************************************/
@@ -163,11 +182,13 @@ public class GameManager : Singleton<GameManager>
         {
             TimeLeft = NightTime;
             nightFilter.SetActive(true);
+            shop.SetActive(false);
         }
         else
         {
             TimeLeft = DayTime;
             nightFilter.SetActive(false);
+            shop.SetActive(true);
         }
         PlayerFireRate = Player.Instance.FireRate;
         PlayerMaxHealth = Player.Instance.MaxHealth;
@@ -195,11 +216,14 @@ public class GameManager : Singleton<GameManager>
             {
                 TimeLeft = NightTime;
                 nightFilter.SetActive(true);
+                shop.SetActive(false);
+                shopMenu.SetActive(false);
             }
             else
             {
                 TimeLeft = DayTime;
                 nightFilter.SetActive(false);
+                shop.SetActive(true);
                 Player.Instance.Health = Player.Instance.MaxHealth;
                 Player.Instance.PlayerHealthBar.SetMaxHealth(Player.Instance.MaxHealth);
             }
@@ -212,6 +236,35 @@ public class GameManager : Singleton<GameManager>
         if (!isNight)
         {
             Destroy(GameObject.FindGameObjectWithTag("FreeFood"));
+        }
+    }
+
+    // Upgrade player maximum health
+    public void UpMaxHP()
+    {
+        if (TechCash>=2)
+        {
+            Player.Instance.MaxHealth += 1;
+            Player.Instance.Health = Player.Instance.MaxHealth;
+            // Update health bar display
+            Player.Instance.PlayerHealthBar.SetMaxHealth(Player.Instance.MaxHealth);
+            // Update max health display
+            PlayerMaxHealth = Player.Instance.MaxHealth;
+            // Update cash and display
+            TechCash -= 2;
+        }
+    }
+
+    // Upgrade player fire rate
+    public void UpMaxFR()
+    {
+        if (TechCash>=4)
+        {
+            Player.Instance.FireRate += 1;
+            // Update fire rate display
+            PlayerFireRate = Player.Instance.FireRate;
+            // Update cash and display
+            TechCash -= 4;
         }
     }
 

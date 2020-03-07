@@ -279,4 +279,13 @@ public class Player : Singleton<Player>
             Destroy(collision.gameObject);
         }
     }
+
+    // Player triggers the shop interface
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Shop"))
+        {
+            GameManager.Instance.ShopMenu.SetActive(true);
+        }
+    }
 }

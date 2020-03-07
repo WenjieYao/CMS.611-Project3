@@ -24,7 +24,7 @@ public class Projectile : Singleton<Projectile>
     // Destroy the projectile when it hits a target
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.tag.Equals("Player"))
+        if (!collision.gameObject.tag.Equals("Player")&&!collision.gameObject.tag.Equals("FreeFood")&&!collision.gameObject.tag.Equals("Projectile"))
             Destroy(gameObject);
     }
 }
