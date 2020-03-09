@@ -148,7 +148,7 @@ public class Monster: Singleton<Monster>
                 if (health<=0)
                 {
                     // Player gain tech cash
-                    GameManager.Instance.TechCash += 1;
+                    GameManager.Instance.TechCash += GameManager.Instance.Round;
                     // Drop collectables at a chance of 5%
                     if (Random.Range(0.0f, 1.0f)>0.95)
                     {

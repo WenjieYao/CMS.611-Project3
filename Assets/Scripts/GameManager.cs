@@ -16,8 +16,8 @@ public class GameManager : Singleton<GameManager>
     /************* Game Control Parameters **************/
     /****************************************************/
     // Day/Night time
-    private float DayTime = 10;
-    private float NightTime = 20;
+    private float DayTime = 20;
+    private float NightTime = 25;
     // Pause flag
     private bool pause = false;
     // Day/Night cycle flag
@@ -87,7 +87,7 @@ public class GameManager : Singleton<GameManager>
 
     // Price increase rate
     [SerializeField]
-    private float priceIncRate = 1.5f;
+    private float priceIncRate = 1.25f;
 
     // Current round (year) and display
     private int round = 1;
@@ -259,7 +259,7 @@ public class GameManager : Singleton<GameManager>
     {
         // Initialze display
         Round = 1;
-        TechCash = 100;
+        TechCash = 75;
         if (isNight)
         {
             TimeLeft = NightTime;
