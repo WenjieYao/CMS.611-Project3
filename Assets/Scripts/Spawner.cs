@@ -21,7 +21,7 @@ public class Spawner : Singleton<Spawner>
 
     // Monster attacking target
     private GameObject target = null;
-    // A temporary number used or spawning control
+    // A temporary number used for spawning control
     private float spawnTimeRemaining = 0;
 
     /****************************************************/
@@ -81,7 +81,7 @@ public class Spawner : Singleton<Spawner>
             // Set transform to a shared parent
             monster.transform.SetParent(GameManager.Instance.MonsterParent);
             // Restore cool down time
-            if (monster.GetComponent<Monster>().IsImmortal)
+            if (monster.GetComponent<Monster>().SingleSpawn)
             {
                 // Spawn only one immortal monster per night
                 spawnTimeRemaining = 1F/0F;
