@@ -247,7 +247,7 @@ public class GameManager : Singleton<GameManager>
         set
         {
             this.round = value;
-            this.roundTxt.text = "Year: " + years[round];
+            this.roundTxt.text = years[round];
         }
     }
     /****************************************************/

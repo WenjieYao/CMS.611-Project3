@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5575181080581539950}
   - component: {fileID: 1562097105016010960}
   m_Layer: 0
-  m_Name: BigMonster
+  m_Name: Course5M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7407669395827767788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.623274, y: 0.25746572, z: -3.7865539}
-  m_LocalScale: {x: 1.8, y: 1.8, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: -1000821111
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 289cdaa18d8734b4cbf7e1b9d59d277a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 77512a54ac40c47b98c1e12d38a57463, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -123,7 +123,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.845, y: 1.495}
+    oldSize: {x: 2.8, y: 2.8}
     newSize: {x: 0.845, y: 1.495}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
