@@ -18,11 +18,15 @@ public class Spawner : Singleton<Spawner>
     // Spawning monster prefab
     [SerializeField]
     private GameObject monsterPrefab = null;
+    [SerializeField]
+    private int monstersPerSpawn = 1;
 
     // Monster attacking target
     private GameObject target = null;
     // A temporary number used for spawning control
     private float spawnTimeRemaining = 0;
+    // A bool for determining whether to reset spawn
+    private bool resetSpawn = true;
 
     /****************************************************/
     // Public properties that corresponds to the private
@@ -51,6 +55,17 @@ public class Spawner : Singleton<Spawner>
             this.monsterPrefab = value;
         }
     }
+    public int MonstersPerSpawn
+    {
+        get
+        {
+            return this.monstersPerSpawn;
+        }
+        set
+        {
+            this.monstersPerSpawn = value;
+        }
+    }
     /****************************************************/
 
     /****************************************************/
@@ -64,6 +79,9 @@ public class Spawner : Singleton<Spawner>
         // Set the player as the target
         if (target == null)
             target = GameObject.FindGameObjectWithTag("Player");
+        // Determine if we want to reset spawn
+        resetSpawn = !(monsterPrefab.GetComponent<Monster>().SingleSpawn);
+        
     }
 
     // Update is called once per frame
@@ -74,27 +92,41 @@ public class Spawner : Singleton<Spawner>
         // Spawn a new monster when cool down time is 0
         if (spawnTimeRemaining <= 0 && GameManager.Instance.IsNight)
         {
-            // Create a new monster object
-            GameObject monster = Instantiate(monsterPrefab, transform.position, Quaternion.identity);
-            // Set monster target
-            monster.GetComponent<Monster>().Target = target;
-            // Set transform to a shared parent
-            monster.transform.SetParent(GameManager.Instance.MonsterParent);
-            // Restore cool down time
-            if (monster.GetComponent<Monster>().SingleSpawn)
-            {
-                // Spawn only one immortal monster per night
-                spawnTimeRemaining = 1F/0F;
-            }
-            else
-            {
-                spawnTimeRemaining = 1.0F/spawnRate;
-            }
+            // Spawn monsters
+            SpawnMonsters(monsterPrefab, monstersPerSpawn);
+            ResetSpawnTime();
         }
         // Reset spawning time at day
         if (!GameManager.Instance.IsNight)
         {
             spawnTimeRemaining = 1.0F/spawnRate;
         }
+    }
+
+    /**
+     *<summary> Spawn <c>numMonsters</c> monsters around the spawner</summary>
+     */
+    private void SpawnMonsters(GameObject monsterPrefab, int numMonsters)
+    {
+        List<Vector2> spawnVectors = Angle.GetCircularVectorPattern(numMonsters, Vector2.up);
+        float vectorScale = 1f;
+        foreach (Vector2 spawnVector in spawnVectors)
+        {
+            // Create a new monster object
+            GameObject monster = Instantiate(monsterPrefab, transform.position + (Vector3) spawnVector * vectorScale, Quaternion.identity);
+            // Set monster target
+            monster.GetComponent<Monster>().Target = target;
+            // Set transform to a shared parent
+            monster.transform.SetParent(GameManager.Instance.MonsterParent);
+        }
+    }
+
+    // Restore Cool Down Time
+    private void ResetSpawnTime()
+    {
+        if (resetSpawn)
+            spawnTimeRemaining = 1.0F / spawnRate;
+        else
+            spawnTimeRemaining = 1F / 0F;
     }
 }
