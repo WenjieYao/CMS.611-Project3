@@ -90,7 +90,8 @@ public class GameManager : Singleton<GameManager>
     private float priceIncRate = 1.25f;
 
     // Current round (year) and display
-    private int round = 1;
+    private int round = 0;
+    private string[] years = new string[]{"", "Freshman", "Sophomore", "Junior", "Senior"};
     [SerializeField]
     private TMP_Text roundTxt = null; 
     /****************************************************/
@@ -181,7 +182,7 @@ public class GameManager : Singleton<GameManager>
         set
         {
             this.playerMaxHealth = value;
-            this.playerMHTxt.text = "Max HP:    " + value.ToString();
+            this.playerMHTxt.text = "Max HP: " + value.ToString();
         }
     }
 
@@ -246,7 +247,7 @@ public class GameManager : Singleton<GameManager>
         set
         {
             this.round = value;
-            this.roundTxt.text = "Year: " + value.ToString();
+            this.roundTxt.text = "Year: " + years[round];
         }
     }
     /****************************************************/
