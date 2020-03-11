@@ -20,12 +20,16 @@ public class StartGameManager : Singleton<StartGameManager>
     [SerializeField]
     private GameObject Instructions = null;
 
+    [SerializeField]
+    private GameObject SecondInstructions = null;
+
     // Start is called before the first frame update
     void Start()
     {
         StoryMenu.SetActive(false);
         ControlsMenu.SetActive(false);
         Instructions.SetActive(false);
+        SecondInstructions.SetActive(false);
         MainMenu.SetActive(true);
         
     }
@@ -48,6 +52,7 @@ public class StartGameManager : Singleton<StartGameManager>
         MainMenu.SetActive(false);
         ControlsMenu.SetActive(false);
         Instructions.SetActive(false);
+        SecondInstructions.SetActive(false);
         StoryMenu.SetActive(true);
     }
 
@@ -57,6 +62,7 @@ public class StartGameManager : Singleton<StartGameManager>
         MainMenu.SetActive(false);
         StoryMenu.SetActive(false);
         Instructions.SetActive(false);
+        SecondInstructions.SetActive(false);
         ControlsMenu.SetActive(true);
     }
 
@@ -66,6 +72,16 @@ public class StartGameManager : Singleton<StartGameManager>
         MainMenu.SetActive(false);
         StoryMenu.SetActive(false);
         ControlsMenu.SetActive(false);
+        SecondInstructions.SetActive(false);
         Instructions.SetActive(true);        
+    }
+
+    public void GoToSecondInstructions()
+    {
+        MainMenu.SetActive(false);
+        StoryMenu.SetActive(false);
+        ControlsMenu.SetActive(false);
+        Instructions.SetActive(false);
+        SecondInstructions.SetActive(true);
     }
 }
