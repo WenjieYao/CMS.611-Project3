@@ -130,7 +130,7 @@ public class GameManager : Singleton<GameManager>
         set
         {
             this.techCash = value;
-            this.techCashTxt.text = "TechCash: " + value.ToString();
+            this.techCashTxt.text = "$" + value.ToString() + " TechCash";
         }
     }
 
