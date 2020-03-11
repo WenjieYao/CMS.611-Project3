@@ -24,6 +24,8 @@ public class Monster: Singleton<Monster>
     // Is a immortal target or not
     [SerializeField]
     private bool isImmortal = false;
+    [SerializeField]
+    private bool singleSpawn = false;
     // Monster movement speed
     [SerializeField]
     private float speed = 0;
@@ -86,6 +88,17 @@ public class Monster: Singleton<Monster>
         private set
         {
             this.isImmortal = value;
+        }
+    }
+    public bool SingleSpawn
+    {
+        get
+        {
+            return singleSpawn;
+        }
+        set
+        {
+            this.singleSpawn = value;
         }
     }
     public GameObject Target
