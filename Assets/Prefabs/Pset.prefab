@@ -152,3 +152,5 @@ MonoBehaviour:
   target: {fileID: 6376697725846107653, guid: 5ad330e134bcf448a8fe63ac50e6a43e, type: 3}
   collectiblePrefab: {fileID: 5680234834701450658, guid: 29a9bc2a219384c2e81f20ecacd17719,
     type: 3}
+  dropTextPrefab: {fileID: 8145251843548962373, guid: ed957ec7c597f4e2c9cdcdd612c4ca1a,
+    type: 3}

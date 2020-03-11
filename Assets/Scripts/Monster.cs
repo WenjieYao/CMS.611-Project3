@@ -35,6 +35,9 @@ public class Monster: Singleton<Monster>
     // Prefab of monster drops collectables
     [SerializeField]
     private GameObject collectiblePrefab = null;
+    // Prefab of monster drop text
+    [SerializeField]
+    private GameObject dropTextPrefab = null;
     // Current rigidbody2d object
     private Rigidbody2D rb2D;
     // Attack cool down time
@@ -160,15 +163,7 @@ public class Monster: Singleton<Monster>
                 // Enemy died when health reaches 0
                 if (health<=0)
                 {
-                    // Player gain tech cash
-                    GameManager.Instance.TechCash += GameManager.Instance.Round;
-                    // Drop collectables at a chance of 5%
-                    if (Random.Range(0.0f, 1.0f)>0.95)
-                    {
-                        GameObject collectible = Instantiate(collectiblePrefab, transform.position, Quaternion.identity) as GameObject;
-                        collectible.transform.SetParent(GameManager.Instance.MonsterParent);
-                    }
-                    Destroy(gameObject);
+                    Die();
                 }
             }
         }
@@ -191,5 +186,23 @@ public class Monster: Singleton<Monster>
             Player.Instance.PlayerHealthBar.SetHealth(Player.Instance.Health);
             attackCoolDown = 1.0F/attackRate;
         }
+    }
+
+    // Code to Execute When Monster Dies
+    private void Die()
+    {
+        // Player gain tech cash
+        int techCash = GameManager.Instance.Round;
+        GameManager.Instance.TechCash += techCash;
+        GameObject dropText = Instantiate(dropTextPrefab, transform.position, Quaternion.identity);
+        dropText.GetComponent<DropText>().Text = "+" + techCash + "$";
+        // Drop collectables at a chance of 5%
+        if (Random.Range(0.0f, 1.0f) > 0.95)
+        {
+            GameObject collectible = Instantiate(collectiblePrefab, transform.position, Quaternion.identity) as GameObject;
+
+            collectible.transform.SetParent(GameManager.Instance.MonsterParent);
+        }
+        Destroy(gameObject);
     }
 }
