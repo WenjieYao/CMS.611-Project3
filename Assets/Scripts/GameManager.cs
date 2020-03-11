@@ -81,9 +81,9 @@ public class GameManager : Singleton<GameManager>
     private TMP_Text HPCostTxt = null;
 
     // Attack power upgrade cost and display
-    private float upAttackCost;
+    /*private float upAttackCost;
     [SerializeField]
-    private TMP_Text AttackCostTxt = null;
+    private TMP_Text AttackCostTxt = null;*/
 
     // Price increase rate
     [SerializeField]
@@ -207,7 +207,7 @@ public class GameManager : Singleton<GameManager>
         set
         {
             this.upFRCost = value;
-            this.FRCostTxt.text = "$" + value.ToString();
+            this.FRCostTxt.text = "($" + value.ToString() + ")";
         }
     }
 
@@ -220,11 +220,11 @@ public class GameManager : Singleton<GameManager>
         set
         {
             this.upHPCost = value;
-            this.HPCostTxt.text = "$" + value.ToString();
+            this.HPCostTxt.text = "($" + value.ToString() + ")";
         }
     }
 
-    public float UpAttackCost
+    /*public float UpAttackCost
     {
         get
         {
@@ -235,7 +235,7 @@ public class GameManager : Singleton<GameManager>
             this.upAttackCost = value;
             this.AttackCostTxt.text = "$" + value.ToString();
         }
-    }
+    }*/
 
     public int Round
     {
@@ -276,7 +276,7 @@ public class GameManager : Singleton<GameManager>
         PlayerMaxHealth = Player.Instance.MaxHealth;
         UpHPCost = shopMenu.GetComponent<Shop>().UpMaxHPCost;
         UpFRCost = shopMenu.GetComponent<Shop>().UpMaxFRCost;
-        UpAttackCost = shopMenu.GetComponent<Shop>().UpAttackCost;
+        //UpAttackCost = shopMenu.GetComponent<Shop>().UpAttackCost;
     }
 
     // Update is called once per frame
