@@ -145,9 +145,12 @@ public class Monster: Singleton<Monster>
         // Monsters die when day comes
         if (!GameManager.Instance.IsNight)
             Destroy(gameObject);
+
         // The monster heads towards the target
         Vector2 moveDirection = (Vector2)(target.transform.position - transform.position);
         rb2D.MovePosition(rb2D.position + moveDirection * speed * Time.fixedDeltaTime);
+
+        //Decrement attack cool down time
         attackCoolDown -= Time.fixedDeltaTime;
     }
 
@@ -157,22 +160,7 @@ public class Monster: Singleton<Monster>
         // Hit by the projectile
         if (col.gameObject.tag.Equals("Projectile"))
         {
-            if (!IsImmortal)
-            {
-                health -= Player.Instance.AttackPower;
-                // Enemy died when health reaches 0
-                if (health<=0)
-                {
-                    Die();
-                }
-            }
-        }
-        // Attack the player
-        if (col.gameObject.tag.Equals("Player") && attackCoolDown <=0)
-        {
-            Player.Instance.Health -= attackPower;
-            Player.Instance.PlayerHealthBar.SetHealth(Player.Instance.Health);
-            attackCoolDown = 1.0F/attackRate;
+            OnProjectileHit();
         }
     }
 
@@ -180,29 +168,59 @@ public class Monster: Singleton<Monster>
     void OnCollisionStay2D(Collision2D col)
     {
         // Attack the player
-        if (col.gameObject.tag.Equals("Player") && attackCoolDown <=0)
+        if (col.gameObject.tag.Equals("Player"))
         {
-            Player.Instance.Health -= attackPower;
-            Player.Instance.PlayerHealthBar.SetHealth(Player.Instance.Health);
-            attackCoolDown = 1.0F/attackRate;
+            AttackPlayer();
         }
     }
 
-    // Code to Execute When Monster Dies
-    private void Die()
+    // Code to Execute upon being hit by a projectile
+    private void OnProjectileHit()
     {
-        // Player gain tech cash
-        int techCash = GameManager.Instance.Round;
-        GameManager.Instance.TechCash += techCash;
-        GameObject dropText = Instantiate(dropTextPrefab, transform.position, Quaternion.identity);
-        dropText.GetComponent<DropText>().Text = "+" + techCash + "$";
-        // Drop collectables at a chance of 5%
-        if (Random.Range(0.0f, 1.0f) > 0.95)
+        // Only take damage if not immortal
+        if (!IsImmortal)
         {
-            GameObject collectible = Instantiate(collectiblePrefab, transform.position, Quaternion.identity) as GameObject;
-
-            collectible.transform.SetParent(GameManager.Instance.MonsterParent);
+            health -= Player.Instance.AttackPower;
+            // Enemy died when health reaches 0
+            CheckIfDeath();
         }
-        Destroy(gameObject);
+    }
+
+    // Code to Execute When Monster Is in Contact with Player
+    private void AttackPlayer()
+    {
+        // Only attack if Attack is cooled down
+        if (attackCoolDown <= 0)
+        {
+            // Player Takes Damage
+            Player.Instance.TakeDamage(attackPower);
+            // Reset Cooldown
+            attackCoolDown = 1.0F / attackRate;
+        }
+    }
+
+    // Monster dies if health is less than 0
+    private void CheckIfDeath()
+    {
+        if (health <= 0)
+        {
+            // Player gains tech cash
+            int techCash = GameManager.Instance.Round;
+            GameManager.Instance.TechCash += techCash;
+
+            // Create Enemy Drop Text with Tech Cash Amount
+            GameObject dropText = Instantiate(dropTextPrefab, transform.position, Quaternion.identity);
+            dropText.GetComponent<DropText>().Text = "+" + techCash + "$";
+
+            // Drop collectables at a chance of 5%
+            if (Random.Range(0.0f, 1.0f) > 0.95)
+            {
+                GameObject collectible = Instantiate(collectiblePrefab, transform.position, Quaternion.identity) as GameObject;
+
+                collectible.transform.SetParent(GameManager.Instance.MonsterParent);
+            }
+            Destroy(gameObject);
+        }
+
     }
 }

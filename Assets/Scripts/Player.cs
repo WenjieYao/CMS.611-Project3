@@ -196,74 +196,16 @@ public class Player : Singleton<Player>
         coolDownInterval = 1.0F/fireRate;
     }
 
-    // Get the firing direction as a vector
-    private Vector2 GetFireDirection(int angularOffset, bool FDMouse)
-	{
-        Vector2 rotateVector = new Vector2(0, 0);
-        if (FDMouse)
-        {
-            // Fire at the mouse direction
-            Vector3 MouseDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition)-transform.position;
-            rotateVector.x = MouseDirection.x;
-            rotateVector.y = MouseDirection.y;
-        }
-        else
-        {
-            // Tune direction using arrow key
-            float rotateAngle = angularOffset + rb2d.rotation;
-            rotateVector.x = Mathf.Cos(rotateAngle * Mathf.Deg2Rad);
-            rotateVector.y = Mathf.Sin(rotateAngle * Mathf.Deg2Rad);
-        }
-        rotateVector.Normalize();
-        return rotateVector;
-    }
-
     // Update is called once per frame
     void FixedUpdate()
     {
-        // Move the player
-        moveVector = new Vector2(0, 0);
-        int rotateDirection = 0;
-
-        if (Input.GetKey("w"))
-            moveVector += Vector2.up;
-        if (Input.GetKey("s"))
-            moveVector += Vector2.down;
-        if (Input.GetKey("a"))
-            moveVector += Vector2.left;
-        if (Input.GetKey("d"))
-            moveVector += Vector2.right;
-        // Rotate the player
-        if (Input.GetKey(KeyCode.LeftArrow))
-            rotateDirection += 1;
-        if (Input.GetKey(KeyCode.RightArrow))
-            rotateDirection += -1;
-
-        moveVector.Normalize();
-        Vector2 fireDirection = GetFireDirection(angularOffset,FDMouse);
-        bulletRotation.z = -angularOffset+(float)Mathf.Atan2(fireDirection.y, fireDirection.x) * (float)(180 / Mathf.PI);
-        // Implement movement and rotation using rigidbody2d
-        rb2d.MovePosition(rb2d.position + speed * moveVector * Time.fixedDeltaTime);
-        transform.GetChild(0).rotation = Quaternion.Euler(bulletRotation);
-
+        // Update Position and Rotation of Player
+        UpdatePosition();
+        Vector2 fireDirection = UpdateRotation();
         
-
         // The cool down time
         coolDownInterval -= Time.fixedDeltaTime;
-        // Fire a projectile when the cool down time is 0
-        if (coolDownInterval <= 0 && GameManager.Instance.IsNight && (isAutomatic || Input.GetKey("space")))
-        {
-            // Restore the cool down time according to fire rate
-            coolDownInterval = 1.0F/fireRate;
-            // Fire a projectile
-            GameObject bullet = Instantiate(projectilePrefab, transform.position + 0.15f * (Vector3) fireDirection, Quaternion.Euler(bulletRotation)) as GameObject;
-            // Apply force to get a initial velocity
-            bullet.GetComponent<Rigidbody2D>().velocity = fireDirection * 8;
-            // Set a shared parent
-            bullet.transform.SetParent(GameManager.Instance.ProjectileParent);
-        }
-
-
+        CheckIfFireProjectile(fireDirection);
     }
 
     // Collect free food to refill heath
@@ -287,5 +229,87 @@ public class Player : Singleton<Player>
         {
             GameManager.Instance.ShopMenu.SetActive(true);
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        Health -= damage;
+        PlayerHealthBar.SetHealth(Health);
+    }
+
+    // Move physical position upon update
+    private void UpdatePosition()
+    {
+        moveVector = new Vector2(0, 0);
+
+        if (Input.GetKey("w"))
+            moveVector += Vector2.up;
+        if (Input.GetKey("s"))
+            moveVector += Vector2.down;
+        if (Input.GetKey("a"))
+            moveVector += Vector2.left;
+        if (Input.GetKey("d"))
+            moveVector += Vector2.right;
+
+        moveVector.Normalize();
+        rb2d.MovePosition(rb2d.position + speed * moveVector * Time.fixedDeltaTime);
+    }
+
+    // Set player to direction of mouse and return the direction
+    private Vector2 UpdateRotation()
+    {
+        int rotateDirection = 0;
+        // Rotate the player
+        if (Input.GetKey(KeyCode.LeftArrow))
+            rotateDirection += 1;
+        if (Input.GetKey(KeyCode.RightArrow))
+            rotateDirection += -1;
+
+
+        Vector2 fireDirection = GetFireDirection(angularOffset, FDMouse);
+        bulletRotation.z = -angularOffset + (float)Mathf.Atan2(fireDirection.y, fireDirection.x) * (float)(180 / Mathf.PI);
+
+        // Implement movement and rotation using rigidbody2d
+        transform.GetChild(0).rotation = Quaternion.Euler(bulletRotation);
+
+        return fireDirection;
+    }
+
+    // Fire Projectile in direction of fireDirection if cooldown time is reached
+    private void CheckIfFireProjectile(Vector2 fireDirection)
+    {
+        if (coolDownInterval <= 0 && GameManager.Instance.IsNight && (isAutomatic || Input.GetKey("space")))
+        {
+            // Restore the cool down time according to fire rate
+            coolDownInterval = 1.0F / fireRate;
+            // Fire a projectile
+            GameObject bullet = Instantiate(projectilePrefab, transform.position + 0.15f * (Vector3)fireDirection, Quaternion.Euler(bulletRotation)) as GameObject;
+            // Apply force to get a initial velocity
+            bullet.GetComponent<Rigidbody2D>().velocity = fireDirection * 8;
+            // Set a shared parent
+            bullet.transform.SetParent(GameManager.Instance.ProjectileParent);
+        }
+    }
+
+    // Get the firing direction as a vector
+    private Vector2 GetFireDirection(int angularOffset, bool FDMouse)
+    {
+        Vector2 rotateVector = new Vector2(0, 0);
+        if (FDMouse)
+        {
+            // Fire at the mouse direction
+            Vector3 MouseDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            rotateVector.x = MouseDirection.x;
+            rotateVector.y = MouseDirection.y;
+        }
+        else
+        {
+            // Tune direction using arrow key
+            float rotateAngle = angularOffset + rb2d.rotation;
+            rotateVector.x = Mathf.Cos(rotateAngle * Mathf.Deg2Rad);
+            rotateVector.y = Mathf.Sin(rotateAngle * Mathf.Deg2Rad);
+        }
+        rotateVector.Normalize();
+        return rotateVector;
     }
 }
